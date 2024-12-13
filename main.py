@@ -3,73 +3,6 @@ from tkinter import ttk, messagebox
 import json
 import os
 from datetime import datetime
-from PIL import Image, ImageTk
-from urllib.request import urlopen
-from io import BytesIO
-
-class BookDetailsWindow:
-    def __init__(self, parent, book_data):
-        self.top = tk.Toplevel(parent)
-        self.top.title("Book Details")
-        
-        # Window sizing and positioning
-        window_width = 800
-        window_height = 600
-        screen_width = self.top.winfo_screenwidth()
-        screen_height = self.top.winfo_screenheight()
-        x = (screen_width - window_width) // 2
-        y = (screen_height - window_height) // 2
-        self.top.geometry(f"{window_width}x{window_height}+{x}+{y}")
-        
-        self.create_details_view(book_data)
-        
-    def create_details_view(self, book):
-        main_frame = ttk.Frame(self.top, padding="20")
-        main_frame.pack(fill=tk.BOTH, expand=True)
-        
-        # Left frame for cover art
-        left_frame = ttk.Frame(main_frame)
-        left_frame.pack(side=tk.LEFT, padx=10)
-        
-        # Placeholder for book cover (you can replace this with actual cover art loading)
-        cover_label = ttk.Label(left_frame, text="Cover Art\nPlaceholder", 
-                              borderwidth=2, relief="solid", width=30, padding=100)
-        cover_label.pack()
-        
-        # Right frame for book details
-        right_frame = ttk.Frame(main_frame)
-        right_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10)
-        
-        # Title
-        title_label = ttk.Label(right_frame, text=book['title'], 
-                               font=('Helvetica', 16, 'bold'))
-        title_label.pack(anchor='w', pady=5)
-        
-        # Author
-        author_label = ttk.Label(right_frame, text=f"By {book['author']}", 
-                                font=('Helvetica', 12, 'italic'))
-        author_label.pack(anchor='w', pady=5)
-        
-        # Genre
-        genre_label = ttk.Label(right_frame, text=f"Genre: {book['genre']}")
-        genre_label.pack(anchor='w', pady=5)
-        
-        # Release Date
-        release_label = ttk.Label(right_frame, text=f"Released: {book['release_date']}")
-        release_label.pack(anchor='w', pady=5)
-        
-        # Book Resume
-        resume_frame = ttk.LabelFrame(right_frame, text="Book Summary", padding="10")
-        resume_frame.pack(fill=tk.BOTH, expand=True, pady=10)
-        
-        resume_text = tk.Text(resume_frame, wrap=tk.WORD, height=10)
-        resume_text.insert(tk.END, "Book summary placeholder text. You can add the actual book summary here.")
-        resume_text.config(state='disabled')
-        resume_text.pack(fill=tk.BOTH, expand=True)
-        
-        # Close button
-        close_button = ttk.Button(right_frame, text="Close", command=self.top.destroy)
-        close_button.pack(pady=10)
 
 class AddBookWindow:
     def __init__(self, parent, callback):
@@ -215,9 +148,6 @@ class LibraryUI:
                 book['time_borrowed']
             ))
         
-        # Add double-click event binding
-        self.tree.bind('<Double-1>', self.show_book_details)
-        
         self.tree.pack(fill=tk.BOTH, expand=True)
         
         scrollbar = ttk.Scrollbar(self.main_frame, orient=tk.VERTICAL, command=self.tree.yview)
@@ -252,20 +182,6 @@ class LibraryUI:
             self.save_books()
         else:
             messagebox.showinfo("Selection", "Please select a book to delete.")
-    
-    def show_book_details(self, event):
-        selected_item = self.tree.selection()
-        if selected_item:
-            values = self.tree.item(selected_item)['values']
-            book_data = {
-                'title': values[0],
-                'author': values[1],
-                'genre': values[2],
-                'release_date': values[3],
-                'copies': values[4],
-                'time_borrowed': values[5]
-            }
-            BookDetailsWindow(self.root, book_data)
 
 if __name__ == "__main__":
     root = tk.Tk()

@@ -1,0 +1,34 @@
+[
+    {
+        "title": "Book Title",
+        "author": "Author Name",
+        "genre": "",
+        "release_date": "",
+        "copies": "",
+        "time_borrowed": ""
+    },
+    {
+        "title": "Chronique a trois",
+        "author": "Mokles",
+        "genre": "",
+        "release_date": "",
+        "copies": "",
+        "time_borrowed": ""
+    },
+    {
+        "title": "Nouveau livre",
+        "author": "Albert",
+        "genre": "Guerre",
+        "release_date": 1939,
+        "copies": 3,
+        "time_borrowed": 77
+    },
+    {
+        "title": "The cute",
+        "author": "Murder",
+        "genre": "Murder Mystery",
+        "release_date": 2025,
+        "copies": 908,
+        "time_borrowed": 2002
+    }
+]
